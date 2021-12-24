@@ -1,0 +1,224 @@
+Create an 'Employee' class
+
+In the constructor, pass the following parameters: 'firstname', 'lastname', 'company' and 'role' and
+
+create the associated instance attributes. Attention! Create an additional instance attribute, called 'email' which will be the concatenation of the 'firstname', 'lastname' and 'company' attributes, in the following format: firstname.lastname@company.com
+
+Create a first 'fullname' instance method, returning the employee's full name
+
+Create a second instance method 'infos_employee', returning all the information known to the employee,
+
+in the following format: 'firstname lastname - company - email - role'
+
+Create an attribute of class 'nb_of_employees' which will count the number of employees created. Initialize the attribute to 0 and
+increment its value each time we create an employee (= instantiate our class 'Employee')
+
+Create a class method 'employees_nb' which will return the number of employees created
+
+Use the two instantiations below. Everything should be executed without error
+
+emp1 = Employee('Melanie', 'Coltel', 'Wild Code School', 'Brand Manager')
+emp2 = Employee('Tim', 'Bolk', 'Harnham', 'Business Developer')
+
+Test of the 'Employee' class:
+
+Display the result of the 'infos_employee' instance method for our 'emp1' and 'emp2' objects
+
+Display the number of employees created
+
+----------------------------------------------------------------------------------------------------
+
+
+class Employee :
+
+    nb_of_employees = 0 
+
+    # Constructeur avec les attributs :
+    def __init__(self, firstname, lastname, company, role):
+        self.firstname = firstname
+        self.lastname = lastname
+        self.company = company
+        self.role = role
+        self.email = (self.firstname+"."+self.lastname+"@"+self.company+".com").lower().replace(" ","")
+    
+        Employee.nb_of_employees += 1
+
+    # Méthodes d'instance :
+
+    def fullName(self):
+        print(f"{self.firstname} {self.lastname}")
+
+    def infos_employee(self):
+        print(f"{self.firstname} {self.lastname} - {self.company} - {self.email} - {self.role}")   
+
+    @classmethod
+    def employees_nb(cls):
+        print(f"Number of employees created : {cls.nb_of_employees}")
+        
+        
+        
+        
+ emp1 = Employee('Melanie', 'Coltel', 'Wild Code School', 'Brand Manager')
+ emp2 = Employee('Tim', 'Bolk', 'Harnham', 'Business Developer')       
+ 
+ 
+ emp1.infos_employee()
+ emp2.infos_employee()
+ 
+ 
+ Employee.employees_nb()
+ 
+-----------------------------------------------------------------------------------------------------
+
+Create a child class 'DataEmployee' which inherits all the attributes and methods of our Parent class
+'Employee' and add a 'tech_stack' instance attribute
+
+Modify the 'infos_employee' method from our Daughter class and add 'tech _stack' to the return of the method.
+
+Use instantiation below. Execution should not produce an error
+
+data1 = DataEmployee("Antony", "Henrion", "Wild Code School", "Data Analyst", "Python, SQL, Tableau, MongoDB, etc., etc., etc.")
+data2 = DataEmployee("Ben-Manson", "Toussaint", "Wild Code School", "Data Scientist", "Python, SQL, Deep Learning, Transfer Learning, CV, etc., etc., etc.")
+data3 = DataEmployee("Tarik", "Aoun", "Wild Code School", "Data Engineer",  "GCP, Dataiku, Knime, Hadoop, Spark, Python, MongoDB, etc., etc., etc.")
+data4 = DataEmployee("Vanessa", "Hurtmann", "Doctolib", "Data Quality Manager", "NaN")
+
+Test of the 'DataEmployee' class:
+
+Display the result of the 'infos_employee' instance method for our 'data1', 'data2' and 'data3' objects
+
+Show email for object 'data1'
+
+Display the number of employees created from the 'DataEmployee' class. Does the result seem logical to you? Why ?
+
+---------------------------------------------------------------------------------------------------------
+
+
+
+class DataEmployee(Employee):
+    
+    # Constructeur avec les attributs :
+    def __init__(self, firstname, lastname, company, role, tech_stack) :
+        super().__init__(firstname, lastname, company, role)
+        self.tech_stack = tech_stack
+
+    #Méthode d'instance :
+    def infos_employee(self):
+        print(f"{self.firstname} {self.lastname} - {self.company} - {self.email} - {self.role} - {self.tech_stack}")
+        
+        
+data1 = DataEmployee("Antony", "Henrion", "Wild Code School", "Data Analyst", "Python, SQL, Tableau, MongoDB, etc., etc., etc.")
+data2 = DataEmployee("Ben-Manson", "Toussaint", "Wild Code School", "Data Scientist", "Python, SQL, Deep Learning, Transfer Learning, CV, etc., etc., etc.")
+data3 = DataEmployee("Tarik", "Aoun", "Wild Code School", "Data Engineer",  "GCP, Dataiku, Knime, Hadoop, Spark, Python, MongoDB, etc., etc., etc.")
+data4 = DataEmployee("Vanessa", "Hurtmann", "Doctolib", "Data Quality Manager", "NaN")     
+
+data1.infos_employee()
+data2.infos_employee()
+data3.infos_employee()
+data4.infos_employee()
+
+
+data1.email
+
+
+DataEmployee.employees_nb()
+
+
+---------------------------------------------------------------------------------------------------------------
+
+Create a 'Manager' child class which inherits all the attributes and methods of our Parent class
+'Employee' and add an 'employees' instance attribute which defaults to None. In the constructor, check the following condition: If 'employees' is equal to None, then 'self.employees' will be an empty list, otherwise, 'self.employees' will be equal to the parameter.
+
+Create a 1st instance method called 'add_emp' which will add the employee supervised by the manager.
+Check, upstream, that the employee is NOT already on the list.
+
+Create a 2nd instance method called 'remove_emp' which removes the employee supervised by the manager.
+Check, upstream, that the employee is already on the list.
+
+Create a 3rd instance method called 'print_emps' which displays the employee (s) supervised by the manager
+
+Use instantiation below. Execution should not produce an error
+
+
+mgr1 = Manager("Pierre", "Mur", "Wild Code School", "Head of Data")
+
+Show manager's email address
+
+Add employee 'data4' using the method 'add_emp'
+
+Display the employee (s) supervised by the manager using the 'print_emps' method
+
+Add the employees 'data1', 'data2', 'data3' using the method 'add_emp'
+
+Remove employee 'data4' using the 'remove_emp' method
+
+Display the employee (s) supervised by the manager using the 'print_emps' method
+
+How many and which are the employees supervised by the manager?
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+class Manager(Employee):
+
+
+    # Constructeur avec les attributs :
+    def __init__(self, firstname, lastname, company, role, employees="None") :
+        super().__init__(firstname, lastname, company, role)
+        if employees == "None":
+            self.employees = []
+        else :
+            self.employees = [employees]
+
+    
+    # Méthode d'instance : 
+    def add_emp(self, employees):
+        if employees in self.employees :
+            pass
+        else : 
+            self.employees.append(employees)
+    
+    def remove_emp(self, employees):
+        if employees in self.employees :
+            self.employees.remove(employees)
+        else : 
+            pass
+    
+    def print_emps(self) :
+        return self.employees
+        
+        
+        
+mgr1 = Manager("Pierre", "Mur", "Wild Code School", "Head of Data")
+
+mgr1.email
+
+data4 = DataEmployee("Vanessa", "Hurtmann", "Doctolib", "Data Quality Manager", "NaN")
+
+mgr1.add_emp(data4.firstname)
+
+mgr1.print_emps()
+
+mgr1.add_emp(data1.firstname)
+mgr1.add_emp(data2.firstname)
+mgr1.add_emp(data3.firstname)
+
+mgr1.print_emps()
+
+mgr1.remove_emp(data4.firstname)
+
+mgr1.print_emps()
+
+print(f"{mgr1.firstname} supervise {len(mgr1.print_emps())} personnes qui sont {mgr1.print_emps()}")
+
+
+
+
+
+        
+
+
+
+
+
+
+        
